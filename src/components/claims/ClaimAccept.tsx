@@ -41,7 +41,7 @@ export const ClaimAccept: FC<Props> = ({ claim }) => {
   const updateClaimAccept = async (data: Inputs, claim: Claim) => {
     const docRef = doc(db, "claimList", claim.id);
     await updateDoc(docRef, {
-      status: 1,
+      // status: 1,
       receptionist: currentUser,
       receptionNum: data.receptionNum,
       receptionDate: data.receptionDate,
@@ -52,43 +52,49 @@ export const ClaimAccept: FC<Props> = ({ claim }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {Number(claim.status) === 0 && isAuth(["isoOffice"]) && (
-        <>
-          <Flex
-            justifyContent="center"
-            w="100%"
-            mt={10}
-            flexDirection={{ base: "column", md: "row" }}
-          >
-            <Flex mr={{ base: "0", md: "5" }} alignItems="center">
-              <Box fontSize="lg" fontWeight="semibold" minW="70px">
-                受付NO
-              </Box>
-              <Input
-                placeholder="例 4-001"
-                {...register("receptionNum", { required: true })}
-              />
+      {Number(claim.status) === 0 &&
+        claim.receptionNum === "未設定" &&
+        isAuth(["isoOffice"]) && (
+          <>
+            <Flex
+              justifyContent="center"
+              w="100%"
+              mt={10}
+              flexDirection={{ base: "column", md: "row" }}
+            >
+              <Flex mr={{ base: "0", md: "5" }} alignItems="center">
+                <Box fontSize="lg" fontWeight="semibold" minW="70px">
+                  受付NO
+                </Box>
+                <Input
+                  placeholder="例 4-001"
+                  {...register("receptionNum", { required: true })}
+                />
+              </Flex>
+              <Flex alignItems="center" mt={{ base: "6", md: "0" }}>
+                <Box fontSize="lg" fontWeight="semibold" minW="70px">
+                  受付日
+                </Box>
+                <Input
+                  type="date"
+                  {...register("receptionDate", { required: true })}
+                />
+              </Flex>
             </Flex>
-            <Flex alignItems="center" mt={{ base: "6", md: "0" }}>
-              <Box fontSize="lg" fontWeight="semibold" minW="70px">
-                受付日
-              </Box>
-              <Input
-                type="date"
-                {...register("receptionDate", { required: true })}
-              />
+            <Flex justifyContent="center">
+              <Button type="submit" mt={6} mr={3} colorScheme="blue">
+                受け付ける
+              </Button>
+              <Button
+                mt={6}
+                colorScheme="red"
+                onClick={() => deleteClaim(claim)}
+              >
+                削除する
+              </Button>
             </Flex>
-          </Flex>
-          <Flex justifyContent="center">
-            <Button type="submit" mt={6} mr={3} colorScheme="blue">
-              受け付ける
-            </Button>
-            <Button mt={6} colorScheme="red" onClick={() => deleteClaim(claim)}>
-              削除する
-            </Button>
-          </Flex>
-        </>
-      )}
+          </>
+        )}
     </form>
   );
 };
