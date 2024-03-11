@@ -28,7 +28,11 @@ export const ClaimAccept: FC<Props> = ({ claim }) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      receptionDate: claim.receptionDate,
+    },
+  });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     updateClaimAccept(data, claim);
   };
@@ -48,9 +52,7 @@ export const ClaimAccept: FC<Props> = ({ claim }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {Number(claim.status) === 0 && 
-      isAuth(["isoOffice"]) && 
-      !claim.receptionDate &&  (
+      {Number(claim.status) === 0 && isAuth(["isoOffice"]) && (
         <>
           <Flex
             justifyContent="center"

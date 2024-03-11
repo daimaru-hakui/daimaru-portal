@@ -20,6 +20,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
+import { format } from "date-fns";
 
 type Inputs = {
   receptionNum: string;
@@ -62,7 +63,7 @@ export const useClaims = () => {
         counterplanSelect: "", //対策選択
         counterplanContent: "", //対策内容
         completionDate: "", //完了日
-        receptionDate: "", //受付日
+        receptionDate: format(new Date(), "yyyy-MM-dd"), //受付日
         receptionist: "", //受付者
         receptionNum: "未設定", //受付NO.
         author: currentUser, //記入者

@@ -49,7 +49,7 @@ const ClaimId: NextPage = () => {
             <ClaimReport claim={claim} />
             <ClaimAccept claim={claim} />
             <ClaimConfirmSendButton claim={claim} />
-            {claim.receptionDate && isAuth(["isoOffice"]) && (
+            {claim.receptionNum !== "未設定" && isAuth(["isoOffice"]) && (
               <ClaimSelectSendButton claim={claim} />
             )}
           </Box>
