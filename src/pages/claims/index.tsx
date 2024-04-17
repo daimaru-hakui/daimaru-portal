@@ -25,12 +25,26 @@ import { useClaimStore } from "../../../store/useClaimStore";
 import { useUtils } from "@/hooks/useUtils";
 import { Claim } from "../../../types";
 import { useDisp } from "@/hooks/useDisp";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getCountFromServer,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "../../../firebase";
+import { format } from "date-fns";
 
 const Claims: NextPage = () => {
   const currentUser = useAuthStore((state) => state.currentUser);
   const users = useAuthStore((state) => state.users);
-  const claims = useClaimStore((state) => state.claims);
+  const setClaims = useClaimStore((state) => state.setClaims);
+  const [totalClaim, setTotalClaim] = useState(0);
   const filterClaims = useClaimStore((state) => state.filterClaims);
+  const receptionDateStart = useClaimStore((state) => state.receptionDateStart);
+  const receptionDateEnd = useClaimStore((state) => state.receptionDateEnd);
   const { isAuth } = useUtils();
   const { getUserName } = useDisp();
 
@@ -41,6 +55,46 @@ const Claims: NextPage = () => {
     if ([0, 2, 4].includes(claim.status)) return "事務局";
     return getUserName(claim.operator);
   };
+
+  useEffect(() => {
+    const claimsCollectionRef = collection(db, "claimList");
+    const q = query(
+      claimsCollectionRef,
+      where(
+        "receptionDate",
+        ">=",
+        receptionDateStart || format(new Date(), "yyyy-MM-dd")
+      ),
+      where(
+        "receptionDate",
+        "<=",
+        receptionDateEnd || format(new Date(), "yyyy-MM-dd")
+      ),
+      orderBy("receptionDate", "desc"),
+      orderBy("receptionNum", "desc")
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setClaims(
+        querySnapshot.docs.map(
+          (doc) =>
+            ({
+              ...doc.data(),
+              id: doc.id,
+            } as Claim)
+        )
+      );
+    });
+    return () => unsubscribe();
+  }, [setClaims, receptionDateStart, receptionDateEnd]);
+
+  useEffect(() => {
+    const getTotalClaim = async () => {
+      const coll = collection(db, "claimList");
+      const snapshot = await getCountFromServer(coll);
+      setTotalClaim(snapshot.data().count);
+    };
+    getTotalClaim();
+  }, []);
 
   return (
     <>
@@ -55,7 +109,7 @@ const Claims: NextPage = () => {
         >
           <Flex justifyContent="space-between">
             <Box fontSize="lg">
-              {filterClaims.length}件/全{claims.length}件
+              {filterClaims.length}件/全{totalClaim}件
             </Box>
             <Box>
               <ClaimFilterArea />

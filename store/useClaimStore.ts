@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Claim } from "../types";
 import { create } from "zustand";
 
@@ -29,9 +30,11 @@ export const useClaimStore = create<State>((set) => ({
   setClaims: (payload) => set({ claims: payload }),
   filterClaims: [],
   setFilterClaims: (payload) => set({ filterClaims: payload }),
-  receptionDateStart: "",
+  receptionDateStart: [1, 2].includes(Number(format(new Date(), "M")))
+    ? Number(format(new Date(), "yyyy")) - 1 + "-" + "03-01"
+    : format(new Date(), "yyyy") + "-" + "03-01",
   setReceptionDateStart: (payload) => set({ receptionDateStart: payload }),
-  receptionDateEnd: "",
+  receptionDateEnd: format(new Date(), "yyyy-MM-dd"),
   setReceptionDateEnd: (payload) => set({ receptionDateEnd: payload }),
   stampStaff: "",
   setStampStaff: (payload) => set({ stampStaff: payload }),

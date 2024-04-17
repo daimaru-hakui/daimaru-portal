@@ -23,6 +23,7 @@ import {
 import { useClaimStore } from "../../../store/useClaimStore";
 import { useDisp } from "@/hooks/useDisp";
 import { useUtils } from "@/hooks/useUtils";
+import { format } from "date-fns";
 
 export const ClaimFilterArea: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,8 +56,11 @@ export const ClaimFilterArea: FC = () => {
   const setCounterplan = useClaimStore((state) => state.setCounterplan);
 
   const onFilterReset = () => {
-    setReceptionDateStart("");
-    setReceptionDateEnd("");
+    const initDate = [1, 2].includes(Number(format(new Date(), "M")))
+      ? Number(format(new Date(), "yyyy")) - 1 + "-" + "03-01"
+      : format(new Date(), "yyyy") + "-" + "03-01";
+    setReceptionDateStart(initDate);
+    setReceptionDateEnd(format(new Date(), "yyyy-MM-dd"));
     setStampStaff("");
     setCustomer("");
     setOccurrence("");
@@ -76,18 +80,18 @@ export const ClaimFilterArea: FC = () => {
   useEffect(() => {
     //受付日の開始日で絞り込み
     let newClaims = claims
-      .filter((claim) => {
-        if (!receptionDateStart) return claim;
-        const date1 = new Date(receptionDateStart);
-        const date2 = new Date(claim.receptionDate);
-        if (date1.getTime() <= date2.getTime()) return claim;
-      })
-      .filter((claim) => {
-        if (!receptionDateEnd) return claim;
-        const date1 = new Date(claim.receptionDate);
-        const date2 = new Date(receptionDateEnd);
-        if (date1.getTime() <= date2.getTime()) return claim;
-      })
+      // .filter((claim) => {
+      //   if (!receptionDateStart) return claim;
+      //   const date1 = new Date(receptionDateStart);
+      //   const date2 = new Date(claim.receptionDate);
+      //   if (date1.getTime() <= date2.getTime()) return claim;
+      // })
+      // .filter((claim) => {
+      //   if (!receptionDateEnd) return claim;
+      //   const date1 = new Date(claim.receptionDate);
+      //   const date2 = new Date(receptionDateEnd);
+      //   if (date1.getTime() <= date2.getTime()) return claim;
+      // })
       .filter((claim) => {
         if (!stampStaff) return claim;
         if (claim.stampStaff === stampStaff) return claim;

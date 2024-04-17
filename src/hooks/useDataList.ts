@@ -13,14 +13,12 @@ import {
 import { db } from "../../firebase";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Claim, Request, User } from "../../types";
-import { useClaimStore } from "../../store/useClaimStore";
 import { useUtils } from "./useUtils";
 import { useRequestStore } from "../../store/useRequestStore";
 
 export const useDataList = () => {
   const setUsers = useAuthStore((state) => state.setUsers);
   const setFullUsers = useAuthStore((state) => state.setFullUsers);
-  const setClaims = useClaimStore((state) => state.setClaims);
   const setRequests = useRequestStore((state) => state.setRequests);
   const { getYearMonth } = useUtils();
 
@@ -53,22 +51,6 @@ export const useDataList = () => {
               ...doc.data(),
               id: doc.id,
             } as User)
-        )
-      );
-    });
-  };
-
-  const getClaims = async () => {
-    const claimsCollectionRef = collection(db, "claimList");
-    const q = query(claimsCollectionRef, orderBy("receptionNum", "desc"));
-    onSnapshot(q, (querySnapshot) => {
-      setClaims(
-        querySnapshot.docs.map(
-          (doc) =>
-            ({
-              ...doc.data(),
-              id: doc.id,
-            } as Claim)
         )
       );
     });
@@ -115,7 +97,6 @@ export const useDataList = () => {
   return {
     getUsers,
     getFullUsers,
-    getClaims,
     getRequests,
     createPaymentConfirm,
   };

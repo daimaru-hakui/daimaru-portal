@@ -236,9 +236,7 @@ const GraphClaim = () => {
                   <Th fontSize="sm" py="2">
                     合計
                   </Th>
-                  <Th fontSize="sm">
-                    {<Td>{countClaimSum("occurrenceSelect")}</Td>}
-                  </Th>
+                  <Th fontSize="sm">{countClaimSum("occurrenceSelect")}</Th>
                 </Tr>
               </Tfoot>
             </Table>

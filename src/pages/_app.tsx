@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const {
     getUsers,
     getFullUsers,
-    getClaims,
+    // getClaims,
     getRequests,
     createPaymentConfirm,
   } = useDataList();
@@ -113,10 +113,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     getFullUsers();
   }, [session, setFullUsers]);
-
-  useEffect(() => {
-    getClaims();
-  }, [session, setClaims]);
 
   useEffect(() => {
     getRequests();
