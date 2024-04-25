@@ -16,6 +16,7 @@ import {
   orderBy,
   query,
   startAt,
+  where,
 } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -62,13 +63,14 @@ export const ClaimArea = () => {
     const q = query(
       collection(db, "claimList"),
       orderBy("receptionDate"),
-      startAt(startDate),
-      endAt(endDate)
+      where("receptionDate",">",startDate),
+      where("receptionDate","<",endDate)
     );
-    onSnapshot(q, (snapshot) => {
+    const unsub = onSnapshot(q, (snapshot) => {
       const count = snapshot.docs.map((doc) => ({ ...doc.data() }));
       setClaimLastMonthCount(count.length);
     });
+    return () => unsub()
   }, []);
 
   return (

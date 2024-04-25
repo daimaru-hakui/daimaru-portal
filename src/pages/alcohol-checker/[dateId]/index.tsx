@@ -22,19 +22,21 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../../../firebase";
 import { AlcoholCheckData, User } from "../../../../types";
 import { useAuthStore } from "../../../../store/useAuthStore";
-import { useParams } from "next/navigation";
 import { AlcoholCheckRow } from "@/components/alcohol-checker/AlcoholCheckRow";
 import { AlcoholCheckOldRow } from "@/components/alcohol-checker/AlcoholCheckOldRow";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const AlcoholId = () => {
   const users = useAuthStore((state) => state.users);
   const [notUsers, setNotUsers] = useState<string[]>([]);
-  const [posts, setPosts] = useState<(AlcoholCheckData )[]>([]);
+  const [posts, setPosts] = useState<AlcoholCheckData[]>([]);
   const [oldPosts, setOldPosts] = useState<AlcoholCheckData[]>([]);
-  const { dateId }: { dateId: string } = useParams();
+  const  dateId = usePathname();
 
   //アルコールチェックデータを取得
   useEffect(() => {
+    if (!dateId) return;
     const collectionRef = collection(
       db,
       "alcoholCheckList",
@@ -43,7 +45,7 @@ const AlcoholId = () => {
     );
     const q = query(collectionRef, orderBy("createdAt", "desc"));
     onSnapshot(q, async (snapshot) => {
-      let data: (AlcoholCheckData)[] = [];
+      let data: AlcoholCheckData[] = [];
       for await (let doc of snapshot.docs) {
         data.push({
           ...doc.data(),

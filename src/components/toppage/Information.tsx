@@ -19,7 +19,7 @@ const Information: NextPage<Props> = ({ news }) => {
         お知らせ
       </Box>
       <List spacing={3} w="full">
-        {news.map(({ id, message }) => (
+        {news?.map(({ id, message }) => (
           <Box key={id} pb="2" borderBottom="1px" borderColor="#eeeeee">
             <Flex align={"center"}>
               <Box

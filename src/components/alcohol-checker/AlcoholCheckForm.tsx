@@ -52,7 +52,7 @@ export const AlcoholCheckForm: FC<Props> = ({
 }) => {
   const currentUser = useAuthStore((state) => state.currentUser);
   const todayDate = format(new Date(), "yyyy-MM-dd");
-  const { dateId }: { dateId: string } = useParams();
+  const  dateId  = useParams();
 
   const {
     register,
