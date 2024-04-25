@@ -24,14 +24,15 @@ import { AlcoholCheckData, User } from "../../../../types";
 import { useAuthStore } from "../../../../store/useAuthStore";
 import { AlcoholCheckRow } from "@/components/alcohol-checker/AlcoholCheckRow";
 import { AlcoholCheckOldRow } from "@/components/alcohol-checker/AlcoholCheckOldRow";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 const AlcoholId = () => {
   const users = useAuthStore((state) => state.users);
   const [notUsers, setNotUsers] = useState<string[]>([]);
   const [posts, setPosts] = useState<AlcoholCheckData[]>([]);
   const [oldPosts, setOldPosts] = useState<AlcoholCheckData[]>([]);
-  const  dateId = usePathname();
+  const router = useRouter()
+  const dateId = router.query.dateId as string
 
   //アルコールチェックデータを取得
   useEffect(() => {

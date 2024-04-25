@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  Flex,
   Table,
   TableCaption,
   TableContainer,
@@ -14,8 +15,6 @@ import { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { type MakerWeb } from "../../../types";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 type Props = {
   posts: MakerWeb[];
@@ -23,26 +22,13 @@ type Props = {
 };
 
 const MakerWeb: NextPage<Props> = ({ posts }) => {
-  const [makerReturnContent, setMakerReturnContent] = useState("");
-  useEffect(() => {
-    const getMakerReturn = async () => {
-      try {
-        const res = await axios<{ content: string }>("/api/maker-return");
-        const data = res.data;
-        setMakerReturnContent(data.content);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getMakerReturn();
-  }, []);
 
   return (
     <Container maxW="900px" p={6} rounded="md" bg="white" boxShadow="xs">
       <Tabs>
         <TabList>
           <Tab>メーカーWEB発注リスト</Tab>
-          <Tab>メーカー返品</Tab>
+          <Tab>メーカー返品詳細</Tab>
         </TabList>
 
         <TabPanels>
@@ -89,13 +75,11 @@ const MakerWeb: NextPage<Props> = ({ posts }) => {
               </Table>
             </TableContainer>
           </TabPanel>
-        </TabPanels>
-        <TabPanels>
-          <div
-            style={{ padding: 24 }}
-            className="maker-return"
-            dangerouslySetInnerHTML={{ __html: makerReturnContent }}
-          />
+          <TabPanel minH="100vh">
+            <Flex minH="100vh">
+              <iframe src="/maker-return.pdf" width="100%" min-height="800" />
+            </Flex>
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
