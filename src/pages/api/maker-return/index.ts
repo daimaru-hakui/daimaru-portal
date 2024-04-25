@@ -12,6 +12,6 @@ export  default async function handler(request: NextApiRequest, response: NextAp
   if (!res.ok) {
     return response.status(500)
   }
-  const data = await res.json();
+  const data:{makerReturnContent:string} = await res.json();
   return response.status(200).json({ content: data.makerReturnContent });
 }

@@ -24,7 +24,6 @@ import { AlcoholCheckData, User } from "../../../../types";
 import { useAuthStore } from "../../../../store/useAuthStore";
 import { AlcoholCheckRow } from "@/components/alcohol-checker/AlcoholCheckRow";
 import { AlcoholCheckOldRow } from "@/components/alcohol-checker/AlcoholCheckOldRow";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 
 const AlcoholId = () => {

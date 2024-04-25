@@ -27,8 +27,8 @@ const MakerWeb: NextPage<Props> = ({ posts }) => {
   useEffect(() => {
     const getMakerReturn = async () => {
       try {
-        const res = await axios("/api/maker-return");
-        const data = await res.data;
+        const res = await axios<{ content: string }>("/api/maker-return");
+        const data = res.data;
         setMakerReturnContent(data.content);
       } catch (e) {
         console.log(e);
@@ -91,7 +91,11 @@ const MakerWeb: NextPage<Props> = ({ posts }) => {
           </TabPanel>
         </TabPanels>
         <TabPanels>
-          <div style={{padding:24}} className="maker-return" dangerouslySetInnerHTML={{ __html: makerReturnContent }} />
+          <div
+            style={{ padding: 24 }}
+            className="maker-return"
+            dangerouslySetInnerHTML={{ __html: makerReturnContent }}
+          />
         </TabPanels>
       </Tabs>
     </Container>
