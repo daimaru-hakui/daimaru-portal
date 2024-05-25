@@ -59,7 +59,7 @@ export const AdminEditModal: FC<Props> = ({ user }) => {
 
   const updateAuthority = async (data: Inputs, userId: string) => {
     setIsLoading(true);
-    const docRef = doc(db, "authority", `${userId}`);
+    const docRef = doc(db, "users", `${userId}`);
     try {
       await updateDoc(docRef, {
         rank: Number(data.rank),

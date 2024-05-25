@@ -26,7 +26,7 @@ const Admin = () => {
   //権限
   const isAuthority = async (user: any, prop: string) => {
     try {
-      const docRef = doc(db, "authority", user.uid);
+      const docRef = doc(db, "users", user.uid);
       let toggle = user[prop] === true ? false : true;
       await updateDoc(docRef, {
         [prop]: toggle,
