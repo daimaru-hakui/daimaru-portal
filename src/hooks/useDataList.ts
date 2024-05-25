@@ -23,7 +23,7 @@ export const useDataList = () => {
   const { getYearMonth } = useUtils();
 
   const getUsers = async () => {
-    const usersCollectionRef = collection(db, "authority");
+    const usersCollectionRef = collection(db, "users");
     const q = query(usersCollectionRef, orderBy("rank", "asc"));
     onSnapshot(q, (querySnapshot) => {
       setUsers(
@@ -41,7 +41,7 @@ export const useDataList = () => {
   };
 
   const getFullUsers = async () => {
-    const usersCollectionRef = collection(db, "authority");
+    const usersCollectionRef = collection(db, "users");
     const q = query(usersCollectionRef, orderBy("rank", "asc"));
     onSnapshot(q, (querySnapshot) => {
       setFullUsers(
