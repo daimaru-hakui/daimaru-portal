@@ -6,7 +6,7 @@ export const menu = [
     },
     {
       title: "WEB在庫",
-      link: "https://daimaru-maker-zaiko.vercel.app/daimaru/",
+      link: "https://daimaru-web-zaiko.vercel.app/",
       blank: true,
     },
     {
