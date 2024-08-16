@@ -6,7 +6,7 @@ export const menu = [
   },
   {
     title: "WEB在庫",
-    link: "https://daimaru-web-zaiko.vercel.app/",
+    link: "https://stock.myuni.jp/",
     blank: true,
   },
   {
