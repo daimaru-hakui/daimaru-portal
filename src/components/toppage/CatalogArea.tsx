@@ -5,7 +5,7 @@ import Link from "next/link";
 const CatalogArea = () => {
   const catalogItems = [
     {
-      link: "https://my.ebook5.net/daimaru-hakui/my-uniform-club/",
+      link: "https://my.ebook5.net/daimaru-hakui/my-uniform-club-vol4/",
       src: "/myuni.jpg",
       alt: "myuni カタログ",
     },
@@ -45,9 +45,20 @@ const CatalogArea = () => {
       >
         <Flex flex="2">
           {catalogItems.map((item) => (
-            <Flex flex="1" p="3" justify="center" key={item.link} >
-              <Link href={item.link} style={{ fontSize: 0 }} target="_blank" passHref>
-                <Image src={item.src} alt={item.alt} width="300" height="200" style={{ objectFit: "cover" }} />
+            <Flex flex="1" p="3" justify="center" key={item.link}>
+              <Link
+                href={item.link}
+                style={{ fontSize: 0 }}
+                target="_blank"
+                passHref
+              >
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width="300"
+                  height="200"
+                  style={{ objectFit: "cover" }}
+                />
               </Link>
             </Flex>
           ))}
@@ -62,7 +73,7 @@ const CatalogArea = () => {
         >
           {linkItems.map((item) => (
             <Box h="30%" key={item.title}>
-              <Link href={item.link} target={"_blank"}passHref>
+              <Link href={item.link} target={"_blank"} passHref>
                 <Flex
                   h="100%"
                   minH="50px"
