@@ -18,7 +18,7 @@ const CatalogArea = () => {
   const linkItems = [
     {
       title: "マイユニポータル",
-      link: "https://myuni.vercel.app/catalog",
+      link: "https://my.ebook5.net/daimaru-hakui/my-uniform-club-vol4/",
       color: "rgb(45, 55, 72)",
     },
     {
