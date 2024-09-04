@@ -6,7 +6,7 @@ const CatalogArea = () => {
   const catalogItems = [
     {
       link: "https://my.ebook5.net/daimaru-hakui/my-uniform-club-vol4/",
-      src: "/myuni.jpg",
+      src: "/myuni.png",
       alt: "myuni カタログ",
     },
     {

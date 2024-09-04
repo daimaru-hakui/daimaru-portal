@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     console.log("users");
     if (currentUser) {
-      const docRef = doc(db, "authority", `${currentUser}`);
+      const docRef = doc(db, "users", `${currentUser}`);
       const addAuthority = async () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) return;
@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           uid: currentUser,
           name: session?.email,
           rank: 1000,
-          email:session?.email
+          email: session?.email,
         });
       };
       addAuthority();
