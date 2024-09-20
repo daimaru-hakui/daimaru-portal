@@ -26,7 +26,6 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ categoryData, newsData, linkData }) => {
- 
   return (
     <>
       <Head>
@@ -84,7 +83,7 @@ const Home: NextPage<Props> = ({ categoryData, newsData, linkData }) => {
                 <ReceivablesArea />
                 <QuickLink links={linkData} categories={categoryData} />
               </Flex>
-              <CatalogArea />
+              {/* <CatalogArea /> */}
             </Stack>
           </Box>
           <Box flex={1} maxW={{ base: "full", lg: "40%" }}>
