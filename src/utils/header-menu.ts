@@ -1,7 +1,7 @@
 export const menu = [
   {
     title: "車予約",
-    link: "https://daimaru-portal-v2.vercel.app/car-bookings",
+    link: "https://daimaru-portal.myuni.jp/car-bookings",
     blank: true,
   },
   {
