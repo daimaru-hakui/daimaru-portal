@@ -123,9 +123,9 @@ const Login: NextPage = () => {
               >
                 Login
               </Button>
-              <Box fontSize={9} onClick={resetPassword} cursor="pointer">
+              {/*<Box fontSize={9} onClick={resetPassword} cursor="pointer">
                 パスワードを忘れた場合はこちら
-              </Box>
+              </Box> */}
             </Stack>
           </form>
         </Box>
