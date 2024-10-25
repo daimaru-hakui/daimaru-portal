@@ -47,17 +47,17 @@ const Login: NextPage = () => {
       });
   };
 
-  const resetPassword = () => {
+  const resetPassword = async () => {
     if (!watch("email")) {
       alert("emailを入力してください");
       return;
     }
-    sendPasswordResetEmail(auth, watch("email"))
+    await sendPasswordResetEmail(auth, watch("email"))
       .then(() => alert("再設定用のメールアドレスにお送りしました。"))
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        console.log(error);
       });
   };
 

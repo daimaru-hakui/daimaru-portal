@@ -25,18 +25,23 @@ export const useDataList = () => {
   const getUsers = async () => {
     const usersCollectionRef = collection(db, "users");
     const q = query(usersCollectionRef, orderBy("rank", "asc"));
-    onSnapshot(q, (querySnapshot) => {
-      setUsers(
-        querySnapshot.docs
-          .map(
-            (doc) =>
-              ({
-                ...doc.data(),
-                id: doc.id,
-              } as User)
-          )
-          .filter((doc) => doc.rank !== 1000)
-      );
+    onSnapshot(q, {
+      next: (querySnapshot) => {
+        setUsers(
+          querySnapshot.docs
+            .map(
+              (doc) =>
+                ({
+                  ...doc.data(),
+                  id: doc.id,
+                } as User)
+            )
+            .filter((doc) => doc.rank !== 1000)
+        );
+      },
+      error: () => {
+        console.log("失敗しました");
+      },
     });
   };
 
