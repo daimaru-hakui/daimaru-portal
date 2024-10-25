@@ -12,7 +12,10 @@ import {
 import { NextPage } from "next";
 import { auth } from "../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 type Inputs = {
   email: string;
@@ -23,6 +26,7 @@ const Login: NextPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
@@ -40,6 +44,20 @@ const Login: NextPage = () => {
         alert("失敗しました");
         console.log(error.code);
         console.log(error.message);
+      });
+  };
+
+  const resetPassword = () => {
+    if (!watch("email")) {
+      alert("emailを入力してください");
+      return;
+    }
+    sendPasswordResetEmail(auth, watch("email"))
+      .then(() => alert("再設定用のメールアドレスにお送りしました。"))
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
       });
   };
 
@@ -62,7 +80,8 @@ const Login: NextPage = () => {
               rounded="5"
             >
               <FormControl>
-                <InputGroup>
+                <Box fontWeight="bold">email</Box>
+                <InputGroup mt={1}>
                   <InputLeftElement pointerEvents="none" />
                   <Input
                     type="email"
@@ -78,7 +97,8 @@ const Login: NextPage = () => {
                 )}
               </FormControl>
               <FormControl>
-                <InputGroup>
+                <Box fontWeight="bold">password</Box>
+                <InputGroup mt={1}>
                   <InputLeftElement pointerEvents="none" color="gray.300" />
                   <Input
                     type={"password"}
@@ -103,6 +123,9 @@ const Login: NextPage = () => {
               >
                 Login
               </Button>
+              <Box fontSize={9} onClick={resetPassword} cursor="pointer">
+                パスワードを忘れた場合はこちら
+              </Box>
             </Stack>
           </form>
         </Box>
