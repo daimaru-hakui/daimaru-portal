@@ -1,6 +1,5 @@
 import {
   Container,
-  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -8,13 +7,13 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
+import Image from "next/image";
 
 type Props = {
   calendarData: {
-    imageHonsha: { url: string };
-    imageTokushima: { url: string };
-    imageHonshaNext: { url: string };
-    imageTokushimaNext: { url: string };
+    imageDaimaruArray: { url: string }[];
+    imageTokushimaArray: { url: string }[];
+    imageWillfitArray: { url: string }[];
   };
 };
 
@@ -25,40 +24,54 @@ const Calendar: NextPage<Props> = ({ calendarData }) => {
         <TabList>
           <Tab _focus={{ outline: "none" }}>本社・神戸</Tab>
           <Tab _focus={{ outline: "none" }}>徳島工場</Tab>
+          <Tab _focus={{ outline: "none" }}>ウィルフィット</Tab>
         </TabList>
 
         <TabPanels mt={1}>
           <TabPanel p={0}>
-            <Flex flexDir="column">
-              <img
-                src={calendarData.imageHonsha.url}
-                alt="本社・神戸カレンダー"
-                width="100%"
+            {calendarData.imageDaimaruArray.map((image) => (
+              <Image
+                key={image?.url}
+                src={image?.url}
+                width={800}
+                height={500}
+                alt={"大丸白衣"}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
-              {calendarData.imageHonshaNext && (
-                <img
-                  src={calendarData.imageHonshaNext.url}
-                  alt="本社・神戸カレンダー"
-                  width="100%"
-                />
-              )}
-            </Flex>
+            ))}
           </TabPanel>
           <TabPanel p={0}>
-            <Flex flexDir="column">
-              <img
-                src={calendarData.imageTokushima.url}
-                alt="徳島工場カレンダー"
-                width="100%"
+            {calendarData.imageTokushimaArray.map((image) => (
+              <Image
+                key={image?.url}
+                src={image?.url}
+                width={800}
+                height={500}
+                alt={"徳島工場"}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
-              {calendarData.imageTokushimaNext && (
-                <img
-                  src={calendarData.imageTokushimaNext.url}
-                  alt="徳島工場カレンダー"
-                  width="100%"
-                />
-              )}
-            </Flex>
+            ))}
+          </TabPanel>
+          <TabPanel p={0}>
+            {calendarData.imageWillfitArray.map((image) => (
+              <Image
+                key={image?.url}
+                src={image?.url}
+                width={800}
+                height={500}
+                alt={"ウィルフィット"}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+              />
+            ))}
           </TabPanel>
         </TabPanels>
       </Tabs>
